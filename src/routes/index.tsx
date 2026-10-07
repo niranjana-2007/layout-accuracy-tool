@@ -88,37 +88,47 @@ function Index() {
 
       <main id="top">
         {/* Hero */}
-        <section className="relative mx-auto grid min-h-screen max-w-6xl items-center gap-14 px-6 pt-24 pb-16 md:grid-cols-[1.3fr_1fr]">
-          <div className="reveal">
-            <p className="mb-6 text-xs font-semibold tracking-[0.3em] text-primary">COMPUTER SCIENCE STUDENT</p>
-            <h1 className="text-5xl font-extrabold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
-              Hi, I'm <span className="font-serif font-normal italic text-primary">Niranjana</span>.E
-            </h1>
-            <p className="mt-8 max-w-lg text-lg leading-relaxed text-muted-foreground">
-              B.Tech Computer Science student building my skills through projects, experimentation and continuous learning.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <a href="#projects" className="inline-flex items-center gap-2 rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5">View My Projects <ArrowUpRight size={16} /></a>
-              <a href="#contact" className="inline-flex items-center gap-2 rounded-sm border border-border px-6 py-3 text-sm font-semibold transition-colors hover:border-primary hover:text-primary"><Github size={16} /> GitHub</a>
+        <section className="relative mx-auto grid min-h-screen max-w-6xl items-center gap-16 px-6 pt-28 pb-24 lg:grid-cols-2">
+          <div className="reveal flex flex-col gap-10">
+            <div className="space-y-6">
+              <p className="font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground">Computer Science Student</p>
+              <h1 className="text-6xl font-medium leading-[1.05] tracking-tight md:text-8xl">
+                Hi, I'm <span className="font-serif font-normal italic text-primary">Niranjana.E</span>
+              </h1>
+              <p className="max-w-md text-lg font-light leading-relaxed text-muted-foreground">
+                B.Tech Computer Science student building my skills through projects, experimentation and continuous learning.
+              </p>
             </div>
-            <dl className="mt-14 grid max-w-md grid-cols-2 gap-6 border-t border-border pt-6 text-sm">
-              <div><dt className="text-muted-foreground">College</dt><dd className="mt-1">AWH Engineering College, Kozhikode</dd></div>
-              <div><dt className="text-muted-foreground">Graduating</dt><dd className="mt-1">2029</dd></div>
+            <div className="flex flex-wrap gap-4">
+              <a href="#projects" className="group inline-flex items-center gap-2 rounded-sm bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground transition-all hover:-translate-y-0.5 hover:opacity-90">
+                View My Projects <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
+              <a href="#contact" className="inline-flex items-center gap-2 rounded-sm border border-border px-8 py-4 text-sm font-semibold transition-colors hover:bg-foreground/5">
+                <Github size={16} className="opacity-70" /> GitHub
+              </a>
+            </div>
+            <dl className="grid max-w-sm grid-cols-2 gap-12 border-t border-border pt-10">
+              <div className="space-y-2">
+                <dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground/70">College</dt>
+                <dd className="text-xs leading-relaxed text-foreground/80">AWH Engineering College,<br />Kozhikode</dd>
+              </div>
+              <div className="space-y-2">
+                <dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground/70">Graduating</dt>
+                <dd className="text-xs text-foreground/80">2029</dd>
+              </div>
             </dl>
           </div>
-          <div className="reveal flex justify-center md:justify-end">
-            <div className="relative aspect-square w-64 rounded-full border border-primary/40 p-2 shadow-[0_0_80px_-28px_var(--color-primary)] sm:w-80">
-              <div className="h-full w-full overflow-hidden rounded-full">
-                <img
-                  src={photoAsset.url}
-                  alt="Portrait of Niranjana E"
-                  className="h-full w-full object-cover object-center"
-                />
+          <div className="reveal relative flex items-center justify-center lg:justify-end">
+            <div className="pointer-events-none absolute h-[500px] w-[500px] max-w-full rounded-full bg-primary opacity-[0.08] blur-[120px]" />
+            <div className="relative rounded-full border border-primary/20 p-3">
+              <div className="h-64 w-64 overflow-hidden rounded-full border border-foreground/10 shadow-2xl ring-8 ring-foreground/5 md:h-96 md:w-96">
+                <img src={photoAsset.url} alt="Portrait of Niranjana E" className="h-full w-full object-cover object-center" />
               </div>
             </div>
           </div>
-          <a href="#about" aria-label="Scroll down" className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs tracking-widest text-muted-foreground md:flex">
-            SCROLL <ArrowDown size={14} className="animate-bounce" />
+          <a href="#about" aria-label="Scroll down" className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 animate-pulse flex-col items-center text-muted-foreground/60 md:flex">
+            <span className="mb-3 font-mono text-[9px] uppercase tracking-[0.5em]">Scroll</span>
+            <span className="h-12 w-px bg-gradient-to-b from-foreground to-transparent" />
           </a>
         </section>
 
