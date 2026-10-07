@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, ArrowDown, ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
 import photoAsset from "@/assets/niranjana.jpg.asset.json";
+import interviewAiAsset from "@/assets/interview-ai.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,7 +28,23 @@ const SKILLS = [
   { name: "Basic Web Development", note: "Building simple static websites" },
 ];
 
-const PROJECTS = [1, 2, 3];
+const PROJECTS = [
+  {
+    n: 1,
+    title: "Interview AI",
+    tagline: "AI-powered interview practice web application",
+    purpose:
+      "An interactive interview practice platform designed to help users prepare for interviews by selecting a role, answering interview questions, receiving feedback, and tracking their progress.",
+    tech: ["HTML", "CSS", "JavaScript"],
+    role: "Designed and developed the web interface and implemented the core interview interaction, question flow, answer submission, feedback and progress functionality.",
+    image: interviewAiAsset.url,
+    alt: "Interview AI — home, role selection, interview question and results screens",
+    demo: "https://niranjana-2007.github.io/AI-Interview-Assistant/",
+    repo: "https://github.com/niranjana-2007/AI-Interview-Assistant",
+  },
+];
+
+const PROJECT_PLACEHOLDERS = [2, 3];
 
 function useReveal() {
   useEffect(() => {
