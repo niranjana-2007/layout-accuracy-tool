@@ -190,7 +190,57 @@ function Index() {
         <section id="projects" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-28">
           <SectionHead index="03" title="Projects" id="projects" />
           <div className="space-y-24">
-            {PROJECTS.map((n, i) => (
+            {PROJECTS.map((p, i) => (
+              <article key={p.n} className={`reveal grid items-center gap-10 md:grid-cols-2 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}>
+                <div className="group overflow-hidden rounded-sm border border-border bg-card">
+                  <img
+                    src={p.image}
+                    alt={p.alt}
+                    loading="lazy"
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                  />
+                </div>
+                <div>
+                  <p className="font-mono text-xs tracking-widest text-primary">PROJECT 0{p.n}</p>
+                  <h3 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">{p.title}</h3>
+                  <p className="mt-3 text-lg text-muted-foreground">{p.tagline}</p>
+                  <dl className="mt-8 space-y-5 border-t border-border pt-8 text-sm leading-relaxed">
+                    <div className="grid grid-cols-[8rem_1fr] gap-4">
+                      <dt className="text-muted-foreground">Purpose</dt>
+                      <dd className="text-foreground/90">{p.purpose}</dd>
+                    </div>
+                    <div className="grid grid-cols-[8rem_1fr] gap-4">
+                      <dt className="text-muted-foreground">Technologies</dt>
+                      <dd className="text-foreground/90">{p.tech.join(" · ")}</dd>
+                    </div>
+                    <div className="grid grid-cols-[8rem_1fr] gap-4">
+                      <dt className="text-muted-foreground">My role</dt>
+                      <dd className="text-foreground/90">{p.role}</dd>
+                    </div>
+                  </dl>
+                  <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+                    <a
+                      href={p.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-2 font-medium text-foreground transition-colors hover:text-primary"
+                    >
+                      <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /> Live Demo
+                    </a>
+                    <a
+                      href={p.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 font-medium text-foreground transition-colors hover:text-primary"
+                    >
+                      <Github size={16} /> GitHub Repository
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))}
+
+            {PROJECT_PLACEHOLDERS.map((n, i) => (
               <article key={n} className={`reveal grid items-center gap-10 md:grid-cols-2 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}>
                 <div className="group overflow-hidden rounded-sm border border-border bg-card">
                   <div className="flex aspect-[16/10] items-center justify-center bg-muted text-sm text-muted-foreground transition-transform duration-500 group-hover:scale-[1.03]">
