@@ -46,6 +46,67 @@ const PROJECTS = [
 
 const PROJECT_PLACEHOLDERS = [2, 3];
 
+type Credential = {
+  kind: "Certificate" | "Activity";
+  n: number;
+  title: string;
+  issuer: string;
+  date: string;
+  meta?: { label: string; value: string }[];
+  description?: string;
+  link: string;
+};
+
+const CREDENTIALS: Credential[] = [
+  {
+    kind: "Certificate",
+    n: 1,
+    title: "Getting Started with Artificial Intelligence",
+    issuer: "IBM SkillsBuild",
+    date: "September 23, 2026",
+    link: "https://i.postimg.cc/tC4pN49s/Whats-App-Image-2026-10-07-at-8-53-16-PM.jpg",
+  },
+  {
+    kind: "Certificate",
+    n: 2,
+    title: "Certificate Course in Python",
+    issuer: "G-TEC Computer Education",
+    date: "Issued September 23, 2025",
+    meta: [
+      { label: "Course", value: "2 months" },
+      { label: "Centre", value: "Thalassery, Kannur" },
+      { label: "Grade", value: "A+" },
+      { label: "Completed", value: "August 2025" },
+    ],
+    link: "https://i.postimg.cc/DZG8FySf/Whats-App-Image-2026-10-07-at-8-54-04-PM-(1).jpg",
+  },
+  {
+    kind: "Certificate",
+    n: 3,
+    title: "Certificate Course in Programming in C",
+    issuer: "G-TEC Computer Education",
+    date: "Issued September 23, 2025",
+    meta: [
+      { label: "Course", value: "2 months" },
+      { label: "Centre", value: "Thalassery, Kannur" },
+      { label: "Grade", value: "A" },
+      { label: "Completed", value: "August 2025" },
+    ],
+    link: "https://i.postimg.cc/DzJzdyPn/Whats-App-Image-2026-10-07-at-8-54-04-PM.jpg",
+  },
+  {
+    kind: "Activity",
+    n: 1,
+    title: "Internal Smart India Hackathon",
+    issuer: "AWH Engineering College, Calicut",
+    date: "20–21 September 2025",
+    meta: [{ label: "Type", value: "Certificate of Participation" }],
+    description:
+      "Participated in the Internal Smart India Hackathon and contributed to the collaborative problem-solving and innovation activities conducted as part of the event.",
+    link: "https://i.postimg.cc/CxdMSLty/Whats-App-Image-2026-10-07-at-8-54-03-PM.jpg",
+  },
+];
+
 function useReveal() {
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
@@ -266,14 +327,43 @@ function Index() {
           </div>
         </section>
 
-        {/* Achievements */}
-        <section className="mx-auto max-w-6xl px-6 py-28">
+        {/* Certificates & Activities */}
+        <section id="credentials" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-28">
           <SectionHead index="04" title="Certificates & Activities" id="ach" />
           <ul className="reveal divide-y divide-border border-y border-border">
-            {["Certificate", "Achievement", "Activity"].map((t) => (
-              <li key={t} className="flex flex-wrap items-baseline justify-between gap-2 py-5">
-                <span className="text-lg"><Placeholder>{t} title</Placeholder></span>
-                <span className="text-sm text-muted-foreground"><Placeholder>Issuer · Year</Placeholder></span>
+            {CREDENTIALS.map((c) => (
+              <li key={c.title} className="grid gap-8 py-10 md:grid-cols-[1fr_auto] md:items-end md:gap-14">
+                <div>
+                  <p className={`font-mono text-xs tracking-widest ${c.kind === "Activity" ? "text-muted-foreground" : "text-primary"}`}>
+                    {c.kind === "Activity" ? `ACTIVITY 0${c.n} · PARTICIPATION` : `CERTIFICATE 0${c.n}`}
+                  </p>
+                  <h3 className="mt-3 max-w-2xl text-2xl font-bold leading-tight tracking-tight md:text-3xl">{c.title}</h3>
+                  <p className="mt-3 text-sm text-muted-foreground">
+                    {c.issuer} · {c.date}
+                  </p>
+                  {c.description && (
+                    <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground">{c.description}</p>
+                  )}
+                  {c.meta && (
+                    <dl className="mt-7 flex flex-wrap gap-x-12 gap-y-5 border-t border-border/60 pt-6">
+                      {c.meta.map((m) => (
+                        <div key={m.label} className="flex flex-col gap-1">
+                          <dt className="text-[9px] font-semibold uppercase tracking-widest text-muted-foreground/70">{m.label}</dt>
+                          <dd className="text-xs leading-tight text-foreground/80">{m.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
+                </div>
+                <a
+                  href={c.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex w-fit items-center gap-2 border-b border-border pb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground transition-colors hover:border-primary hover:text-primary"
+                >
+                  {c.kind === "Activity" ? "View Participation Certificate" : "View Certificate"}
+                  <ArrowUpRight size={14} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </a>
               </li>
             ))}
           </ul>
