@@ -44,7 +44,11 @@ const PROJECTS = [
   },
 ];
 
-const PROJECT_PLACEHOLDERS = [2, 3];
+const CONTACTS = [
+  { i: Mail, l: "Email", v: "ninjuu2007@gmail.com", href: "mailto:ninjuu2007@gmail.com", external: false },
+  { i: Github, l: "GitHub", v: "github.com/niranjana-2007", href: "https://github.com/niranjana-2007", external: true },
+  { i: Linkedin, l: "LinkedIn", v: "linkedin.com/in/niranjana-e-9a2957361", href: "https://www.linkedin.com/in/niranjana-e-9a2957361", external: true },
+];
 
 type Credential = {
   kind: "Certificate" | "Activity";
@@ -128,9 +132,6 @@ function SectionHead({ index, title, id }: { index: string; title: string; id: s
   );
 }
 
-function Placeholder({ children }: { children: React.ReactNode }) {
-  return <span className="italic text-muted-foreground/70">[{children}]</span>;
-}
 
 function Index() {
   const [open, setOpen] = useState(false);
@@ -250,36 +251,36 @@ function Index() {
         {/* Projects */}
         <section id="projects" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-28">
           <SectionHead index="03" title="Projects" id="projects" />
-          <div className="space-y-24">
-            {PROJECTS.map((p, i) => (
-              <article key={p.n} className={`reveal grid items-center gap-10 md:grid-cols-2 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}>
-                <div className="group overflow-hidden rounded-sm border border-border bg-card">
-                  <img
-                    src={p.image}
-                    alt={p.alt}
-                    loading="lazy"
-                    className="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-                  />
-                </div>
-                <div>
-                  <p className="font-mono text-xs tracking-widest text-primary">PROJECT 0{p.n}</p>
-                  <h3 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">{p.title}</h3>
-                  <p className="mt-3 text-lg text-muted-foreground">{p.tagline}</p>
-                  <dl className="mt-8 space-y-5 border-t border-border pt-8 text-sm leading-relaxed">
-                    <div className="grid grid-cols-[8rem_1fr] gap-4">
-                      <dt className="text-muted-foreground">Purpose</dt>
-                      <dd className="text-foreground/90">{p.purpose}</dd>
-                    </div>
-                    <div className="grid grid-cols-[8rem_1fr] gap-4">
-                      <dt className="text-muted-foreground">Technologies</dt>
-                      <dd className="text-foreground/90">{p.tech.join(" · ")}</dd>
-                    </div>
-                    <div className="grid grid-cols-[8rem_1fr] gap-4">
-                      <dt className="text-muted-foreground">My role</dt>
-                      <dd className="text-foreground/90">{p.role}</dd>
-                    </div>
-                  </dl>
-                  <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+          {PROJECTS.map((p) => (
+            <article key={p.n} className="reveal grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+              <div className="group overflow-hidden rounded-sm border border-border bg-card">
+                <img
+                  src={p.image}
+                  alt={p.alt}
+                  loading="lazy"
+                  className="aspect-[4/3] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                />
+              </div>
+              <div>
+                <p className="font-mono text-xs tracking-widest text-primary">PROJECT 0{p.n}</p>
+                <h3 className="mt-4 text-5xl font-bold leading-[1.05] tracking-tight md:text-6xl">{p.title}</h3>
+                <p className="mt-4 text-lg text-muted-foreground md:text-xl">{p.tagline}</p>
+                <dl className="mt-10 space-y-6 border-t border-border pt-8 text-sm leading-relaxed">
+                  <div className="grid grid-cols-[8rem_1fr] gap-4">
+                    <dt className="text-muted-foreground">Purpose</dt>
+                    <dd className="text-foreground/90">{p.purpose}</dd>
+                  </div>
+                  <div className="grid grid-cols-[8rem_1fr] gap-4">
+                    <dt className="text-muted-foreground">Technologies</dt>
+                    <dd className="text-foreground/90">{p.tech.join(" · ")}</dd>
+                  </div>
+                  <div className="grid grid-cols-[8rem_1fr] gap-4">
+                    <dt className="text-muted-foreground">My role</dt>
+                    <dd className="text-foreground/90">{p.role}</dd>
+                  </div>
+                </dl>
+                <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+                  {p.demo && (
                     <a
                       href={p.demo}
                       target="_blank"
@@ -288,6 +289,8 @@ function Index() {
                     >
                       <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /> Live Demo
                     </a>
+                  )}
+                  {p.repo && (
                     <a
                       href={p.repo}
                       target="_blank"
@@ -296,35 +299,11 @@ function Index() {
                     >
                       <Github size={16} /> GitHub Repository
                     </a>
-                  </div>
+                  )}
                 </div>
-              </article>
-            ))}
-
-            {PROJECT_PLACEHOLDERS.map((n, i) => (
-              <article key={n} className={`reveal grid items-center gap-10 md:grid-cols-2 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}>
-                <div className="group overflow-hidden rounded-sm border border-border bg-card">
-                  <div className="flex aspect-[16/10] items-center justify-center bg-muted text-sm text-muted-foreground transition-transform duration-500 group-hover:scale-[1.03]">
-                    Project screenshot
-                  </div>
-                </div>
-                <div>
-                  <p className="font-mono text-xs tracking-widest text-primary">PROJECT 0{n}</p>
-                  <h3 className="mt-3 text-3xl font-bold"><Placeholder>Project name</Placeholder></h3>
-                  <p className="mt-4 text-muted-foreground"><Placeholder>Short description</Placeholder></p>
-                  <dl className="mt-6 space-y-3 border-t border-border pt-6 text-sm">
-                    <div className="grid grid-cols-[8rem_1fr]"><dt className="text-muted-foreground">Purpose</dt><dd><Placeholder>Problem it solves</Placeholder></dd></div>
-                    <div className="grid grid-cols-[8rem_1fr]"><dt className="text-muted-foreground">Technologies</dt><dd><Placeholder>Tech used</Placeholder></dd></div>
-                    <div className="grid grid-cols-[8rem_1fr]"><dt className="text-muted-foreground">My role</dt><dd><Placeholder>Contribution</Placeholder></dd></div>
-                  </dl>
-                  <div className="mt-6 flex gap-6 text-sm">
-                    <span className="inline-flex items-center gap-1 text-muted-foreground"><Github size={14} /> GitHub — link pending</span>
-                    <span className="inline-flex items-center gap-1 text-muted-foreground"><ArrowUpRight size={14} /> Live demo — if available</span>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+              </div>
+            </article>
+          ))}
         </section>
 
         {/* Certificates & Activities */}
@@ -397,14 +376,22 @@ function Index() {
               Let's <span className="font-serif font-normal italic text-primary">connect</span>.
             </p>
             <ul className="mt-12 divide-y divide-border border-y border-border">
-              {[
-                { i: Mail, l: "Email" },
-                { i: Github, l: "GitHub" },
-                { i: Linkedin, l: "LinkedIn" },
-              ].map(({ i: Icon, l }) => (
-                <li key={l} className="flex items-center justify-between py-5">
-                  <span className="inline-flex items-center gap-3 text-lg"><Icon size={18} className="text-primary" /> {l}</span>
-                  <span className="text-sm text-muted-foreground">Link to be added</span>
+              {CONTACTS.map(({ i: Icon, l, v, href, external }) => (
+                <li key={l}>
+                  <a
+                    href={href}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noopener noreferrer" : undefined}
+                    className="group flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-5"
+                  >
+                    <span className="inline-flex items-center gap-3 text-lg text-foreground transition-colors group-hover:text-primary">
+                      <Icon size={18} className="text-primary" /> {l}
+                    </span>
+                    <span className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors group-hover:text-primary">
+                      {v}
+                      <ArrowUpRight size={14} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    </span>
+                  </a>
                 </li>
               ))}
             </ul>
