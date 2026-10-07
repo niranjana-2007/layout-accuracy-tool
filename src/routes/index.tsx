@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, ArrowDown, ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
+import photoAsset from "@/assets/niranjana.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -106,9 +107,13 @@ function Index() {
             </dl>
           </div>
           <div className="reveal flex justify-center md:justify-end">
-            <div className="relative aspect-square w-64 rounded-full border border-primary/40 p-2 sm:w-80">
-              <div className="flex h-full w-full items-center justify-center rounded-full bg-muted text-center text-sm text-muted-foreground">
-                Your photo<br />goes here
+            <div className="relative aspect-square w-64 rounded-full border border-primary/40 p-2 shadow-[0_0_80px_-28px_var(--color-primary)] sm:w-80">
+              <div className="h-full w-full overflow-hidden rounded-full">
+                <img
+                  src={photoAsset.url}
+                  alt="Portrait of Niranjana E"
+                  className="h-full w-full object-cover object-center"
+                />
               </div>
             </div>
           </div>
