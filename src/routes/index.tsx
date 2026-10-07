@@ -94,7 +94,7 @@ function Index() {
           <div className="pointer-events-none absolute -bottom-[10%] -left-[5%] h-[400px] w-[400px] rounded-full bg-primary opacity-[0.04] blur-[100px]" />
 
           <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-12 lg:gap-8">
-            <div className="reveal flex flex-col items-start lg:col-span-7">
+            <div className="flex flex-col items-start lg:col-span-7">
               <p className="mb-6 font-mono text-[10px] font-medium uppercase tracking-[0.3em] text-primary opacity-80">
                 Computer Science Student
               </p>
@@ -126,7 +126,7 @@ function Index() {
               </dl>
             </div>
 
-            <div className="reveal flex justify-center lg:col-span-5 lg:justify-end">
+            <div className="flex justify-center lg:col-span-5 lg:justify-end">
               <div className="group relative">
                 <div className="absolute -inset-2 rounded-full bg-primary opacity-20 blur-2xl transition-opacity duration-1000 group-hover:opacity-30" />
                 <div className="relative h-64 w-64 overflow-hidden rounded-full border border-foreground/10 shadow-2xl ring-8 ring-foreground/5 md:h-80 md:w-80 lg:h-96 lg:w-96">
