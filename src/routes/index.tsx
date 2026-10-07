@@ -1,24 +1,242 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { Menu, X, ArrowDown, ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Niranjana E — Computer Science Student Portfolio" },
+      { name: "description", content: "Portfolio of Niranjana E, B.Tech Computer Science student at AWH Engineering College, Kozhikode." },
+      { property: "og:title", content: "Niranjana E — Computer Science Student" },
+      { property: "og:description", content: "Projects, skills and learning journey of a B.Tech CS student." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+const NAV = ["About", "Skills", "Projects", "Journey", "Contact"];
+
+const SKILLS = [
+  { name: "C", note: "Programming fundamentals, logic and problem solving" },
+  { name: "Python", note: "Scripting and core programming concepts" },
+  { name: "HTML", note: "Semantic page structure" },
+  { name: "CSS", note: "Layout and styling" },
+  { name: "Basic Web Development", note: "Building simple static websites" },
+];
+
+const PROJECTS = [1, 2, 3];
+
+function useReveal() {
+  useEffect(() => {
+    const els = document.querySelectorAll(".reveal");
+    const io = new IntersectionObserver(
+      (es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))),
+      { threshold: 0.12 },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+}
+
+function SectionHead({ index, title, id }: { index: string; title: string; id: string }) {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="reveal mb-14 flex items-baseline gap-6 border-b border-border pb-6">
+      <span className="font-mono text-xs tracking-widest text-primary">{index}</span>
+      <h2 id={`${id}-h`} className="text-4xl font-bold tracking-tight md:text-5xl">{title}</h2>
+    </div>
+  );
+}
+
+function Placeholder({ children }: { children: React.ReactNode }) {
+  return <span className="italic text-muted-foreground/70">[{children}]</span>;
+}
+
+function Index() {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useReveal();
+  useEffect(() => {
+    const f = () => setScrolled(window.scrollY > 20);
+    f();
+    window.addEventListener("scroll", f);
+    return () => window.removeEventListener("scroll", f);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <header className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${scrolled ? "border-b border-border bg-background/85 backdrop-blur" : ""}`}>
+        <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+          <a href="#top" className="text-sm font-extrabold tracking-[0.2em]">NIRANJANA<span className="text-primary">.</span>E</a>
+          <ul className="hidden gap-9 md:flex">
+            {NAV.map((n) => (
+              <li key={n}><a href={`#${n.toLowerCase()}`} className="text-sm text-muted-foreground transition-colors hover:text-foreground">{n}</a></li>
+            ))}
+          </ul>
+          <button aria-label="Toggle menu" className="md:hidden" onClick={() => setOpen(!open)}>{open ? <X size={20} /> : <Menu size={20} />}</button>
+        </nav>
+        {open && (
+          <ul className="border-t border-border bg-background px-6 py-4 md:hidden">
+            {NAV.map((n) => (
+              <li key={n}><a onClick={() => setOpen(false)} href={`#${n.toLowerCase()}`} className="block py-3 text-muted-foreground hover:text-foreground">{n}</a></li>
+            ))}
+          </ul>
+        )}
+      </header>
+
+      <main id="top">
+        {/* Hero */}
+        <section className="relative mx-auto grid min-h-screen max-w-6xl items-center gap-14 px-6 pt-24 pb-16 md:grid-cols-[1.3fr_1fr]">
+          <div className="reveal">
+            <p className="mb-6 text-xs font-semibold tracking-[0.3em] text-primary">COMPUTER SCIENCE STUDENT</p>
+            <h1 className="text-5xl font-extrabold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+              Hi, I'm <span className="font-serif font-normal italic text-primary">Niranjana</span>.E
+            </h1>
+            <p className="mt-8 max-w-lg text-lg leading-relaxed text-muted-foreground">
+              B.Tech Computer Science student building my skills through projects, experimentation and continuous learning.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <a href="#projects" className="inline-flex items-center gap-2 rounded-sm bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5">View My Projects <ArrowUpRight size={16} /></a>
+              <a href="#contact" className="inline-flex items-center gap-2 rounded-sm border border-border px-6 py-3 text-sm font-semibold transition-colors hover:border-primary hover:text-primary"><Github size={16} /> GitHub</a>
+            </div>
+            <dl className="mt-14 grid max-w-md grid-cols-2 gap-6 border-t border-border pt-6 text-sm">
+              <div><dt className="text-muted-foreground">College</dt><dd className="mt-1">AWH Engineering College, Kozhikode</dd></div>
+              <div><dt className="text-muted-foreground">Graduating</dt><dd className="mt-1">2029</dd></div>
+            </dl>
+          </div>
+          <div className="reveal flex justify-center md:justify-end">
+            <div className="relative aspect-square w-64 rounded-full border border-primary/40 p-2 sm:w-80">
+              <div className="flex h-full w-full items-center justify-center rounded-full bg-muted text-center text-sm text-muted-foreground">
+                Your photo<br />goes here
+              </div>
+            </div>
+          </div>
+          <a href="#about" aria-label="Scroll down" className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs tracking-widest text-muted-foreground md:flex">
+            SCROLL <ArrowDown size={14} className="animate-bounce" />
+          </a>
+        </section>
+
+        {/* About */}
+        <section id="about" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-28">
+          <SectionHead index="01" title="About" id="about" />
+          <div className="reveal grid gap-10 md:grid-cols-[1fr_2fr]">
+            <p className="font-serif text-3xl italic leading-snug text-primary">Learning by building.</p>
+            <div className="space-y-5 text-lg leading-relaxed text-muted-foreground">
+              <p>I'm <span className="text-foreground">Niranjana</span>, a B.Tech Computer Science student at AWH Engineering College, Kozhikode, Kerala, expected to graduate in 2029.</p>
+              <p>I'm currently learning and building practical projects while developing my foundation in programming and web development — starting with C and Python, and creating websites with HTML and CSS.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Skills */}
+        <section id="skills" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-28">
+          <SectionHead index="02" title="Skills" id="skills" />
+          <ul className="reveal divide-y divide-border border-y border-border">
+            {SKILLS.map((s, i) => (
+              <li key={s.name} className="group grid grid-cols-[3rem_1fr] items-baseline gap-4 py-6 md:grid-cols-[4rem_1fr_1.2fr]">
+                <span className="font-mono text-xs text-muted-foreground">0{i + 1}</span>
+                <span className="text-2xl font-semibold transition-colors group-hover:text-primary md:text-3xl">{s.name}</span>
+                <span className="col-start-2 text-muted-foreground md:col-start-3">{s.note}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 text-sm text-muted-foreground">Currently at a beginner level and growing steadily.</p>
+        </section>
+
+        {/* Projects */}
+        <section id="projects" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-28">
+          <SectionHead index="03" title="Projects" id="projects" />
+          <div className="space-y-24">
+            {PROJECTS.map((n, i) => (
+              <article key={n} className={`reveal grid items-center gap-10 md:grid-cols-2 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}>
+                <div className="group overflow-hidden rounded-sm border border-border bg-card">
+                  <div className="flex aspect-[16/10] items-center justify-center bg-muted text-sm text-muted-foreground transition-transform duration-500 group-hover:scale-[1.03]">
+                    Project screenshot
+                  </div>
+                </div>
+                <div>
+                  <p className="font-mono text-xs tracking-widest text-primary">PROJECT 0{n}</p>
+                  <h3 className="mt-3 text-3xl font-bold"><Placeholder>Project name</Placeholder></h3>
+                  <p className="mt-4 text-muted-foreground"><Placeholder>Short description</Placeholder></p>
+                  <dl className="mt-6 space-y-3 border-t border-border pt-6 text-sm">
+                    <div className="grid grid-cols-[8rem_1fr]"><dt className="text-muted-foreground">Purpose</dt><dd><Placeholder>Problem it solves</Placeholder></dd></div>
+                    <div className="grid grid-cols-[8rem_1fr]"><dt className="text-muted-foreground">Technologies</dt><dd><Placeholder>Tech used</Placeholder></dd></div>
+                    <div className="grid grid-cols-[8rem_1fr]"><dt className="text-muted-foreground">My role</dt><dd><Placeholder>Contribution</Placeholder></dd></div>
+                  </dl>
+                  <div className="mt-6 flex gap-6 text-sm">
+                    <span className="inline-flex items-center gap-1 text-muted-foreground"><Github size={14} /> GitHub — link pending</span>
+                    <span className="inline-flex items-center gap-1 text-muted-foreground"><ArrowUpRight size={14} /> Live demo — if available</span>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* Achievements */}
+        <section className="mx-auto max-w-6xl px-6 py-28">
+          <SectionHead index="04" title="Certificates & Activities" id="ach" />
+          <ul className="reveal divide-y divide-border border-y border-border">
+            {["Certificate", "Achievement", "Activity"].map((t) => (
+              <li key={t} className="flex flex-wrap items-baseline justify-between gap-2 py-5">
+                <span className="text-lg"><Placeholder>{t} title</Placeholder></span>
+                <span className="text-sm text-muted-foreground"><Placeholder>Issuer · Year</Placeholder></span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* Journey */}
+        <section id="journey" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-28">
+          <SectionHead index="05" title="Learning Journey" id="journey" />
+          <ol className="reveal relative ml-2 border-l border-border">
+            {[
+              { y: "2025", t: "Started B.Tech Computer Science", d: "Joined AWH Engineering College, Kozhikode." },
+              { y: "Now", t: "Programming foundations", d: "Learning C and Python, and building web pages with HTML and CSS." },
+              { y: "Next", t: "Building practical projects", d: "Applying what I learn through hands-on projects." },
+              { y: "2029", t: "Expected graduation", d: "B.Tech in Computer Science." },
+            ].map((s) => (
+              <li key={s.t} className="relative pb-12 pl-10 last:pb-0">
+                <span className="absolute -left-[5px] top-2 h-2.5 w-2.5 rounded-full bg-primary" />
+                <p className="font-mono text-xs tracking-widest text-primary">{s.y}</p>
+                <h3 className="mt-2 text-xl font-semibold">{s.t}</h3>
+                <p className="mt-1 text-muted-foreground">{s.d}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* Contact */}
+        <section id="contact" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-28">
+          <SectionHead index="06" title="Contact" id="contact" />
+          <div className="reveal">
+            <p className="max-w-2xl text-4xl font-bold leading-tight md:text-5xl">
+              Let's <span className="font-serif font-normal italic text-primary">connect</span>.
+            </p>
+            <ul className="mt-12 divide-y divide-border border-y border-border">
+              {[
+                { i: Mail, l: "Email" },
+                { i: Github, l: "GitHub" },
+                { i: Linkedin, l: "LinkedIn" },
+              ].map(({ i: Icon, l }) => (
+                <li key={l} className="flex items-center justify-between py-5">
+                  <span className="inline-flex items-center gap-3 text-lg"><Icon size={18} className="text-primary" /> {l}</span>
+                  <span className="text-sm text-muted-foreground">Link to be added</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-border">
+        <div className="mx-auto flex max-w-6xl flex-wrap justify-between gap-4 px-6 py-8 text-sm text-muted-foreground">
+          <span className="font-bold tracking-[0.2em] text-foreground">NIRANJANA.E</span>
+          <span>B.Tech Computer Science</span>
+          <span>© 2026</span>
+        </div>
+      </footer>
     </div>
   );
 }
